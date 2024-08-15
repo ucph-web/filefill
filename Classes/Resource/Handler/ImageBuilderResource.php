@@ -32,6 +32,7 @@ class ImageBuilderResource implements RemoteResourceInterface
         'jpeg',
         'jpg',
         'png',
+        'webp'
     ];
 
     protected $backgroundColor;
