@@ -15,6 +15,6 @@ class GifBuilder extends \TYPO3\CMS\Frontend\Imaging\GifBuilder
             GeneralUtility::mkdir_deep($temporaryPath);
         }
 
-        return $temporaryPath . basename($fileName);
+        return $fileName;
     }
 }
