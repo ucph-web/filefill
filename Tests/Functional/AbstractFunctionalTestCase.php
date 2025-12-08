@@ -7,7 +7,7 @@ namespace IchHabRecht\Filefill\Tests\Functional;
 /*
  * This file is part of the TYPO3 extension filefill.
  *
- * (c) Nicole Cordes <typo3@cordes.co>
+ * (c) Nicole Hummel <nicole-typo3@nimut.dev>
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -41,7 +41,7 @@ class AbstractFunctionalTestCase extends FunctionalTestCase
                                 'configuration' => 'https://upload.wikimedia.org',
                             ],
                             [
-                                'identifier' => 'placeholder',
+                                'identifier' => 'placehold',
                             ],
                             [
                                 'identifier' => 'static',

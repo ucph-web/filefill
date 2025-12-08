@@ -7,7 +7,7 @@ namespace IchHabRecht\Filefill\Tests\Functional\Command;
 /*
  * This file is part of the TYPO3 extension filefill.
  *
- * (c) Nicole Cordes <typo3@cordes.co>
+ * (c) Nicole Hummel <nicole-typo3@nimut.dev>
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -27,7 +27,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ResetCommandTest extends AbstractFunctionalTestCase
 {
-    protected $commandIdentifier = 'filefill:reset';
+    protected string $commandIdentifier = 'filefill:reset';
 
     protected CommandRegistry $commandRegistry;
 
@@ -49,14 +49,14 @@ class ResetCommandTest extends AbstractFunctionalTestCase
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file');
         $rows = $queryBuilder->update('sys_file')
             ->set('missing', 1)
-            ->execute();
+            ->executeStatement();
         $this->assertNotEmpty($rows);
     }
 
     /**
      * @test
      */
-    public function executeResetCommandForStorage()
+    public function executeResetCommandForStorage(): void
     {
         $input = new ArrayInput([
             '--storage' => 1,
@@ -81,7 +81,7 @@ class ResetCommandTest extends AbstractFunctionalTestCase
                     $queryBuilder->createNamedParameter(1)
                 )
             )
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
         $this->assertEmpty($rows);
 
@@ -98,7 +98,7 @@ class ResetCommandTest extends AbstractFunctionalTestCase
                     $queryBuilder->createNamedParameter(2)
                 )
             )
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
         $this->assertNotEmpty($rows);
     }
@@ -106,7 +106,7 @@ class ResetCommandTest extends AbstractFunctionalTestCase
     /**
      * @test
      */
-    public function executeResetCommandForAll()
+    public function executeResetCommandForAll(): void
     {
         $input = new ArrayInput([]);
         $output = new NullOutput();
@@ -124,7 +124,7 @@ class ResetCommandTest extends AbstractFunctionalTestCase
                     $queryBuilder->createNamedParameter(1)
                 )
             )
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
         $this->assertEmpty($rows);
     }

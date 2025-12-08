@@ -7,7 +7,7 @@ namespace IchHabRecht\Filefill\Resource;
 /*
  * This file is part of the TYPO3 extension filefill.
  *
- * (c) Nicole Cordes <typo3@cordes.co>
+ * (c) Nicole Hummel <nicole-typo3@nimut.dev>
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -27,7 +27,7 @@ interface RemoteResourceInterface
      * @param FileInterface|null $fileObject
      * @return bool
      */
-    public function hasFile($fileIdentifier, $filePath, FileInterface $fileObject = null);
+    public function hasFile($fileIdentifier, $filePath, ?FileInterface $fileObject = null): bool;
 
     /**
      * @param string $fileIdentifier
@@ -35,5 +35,5 @@ interface RemoteResourceInterface
      * @param FileInterface|null $fileObject
      * @return resource|string
      */
-    public function getFile($fileIdentifier, $filePath, FileInterface $fileObject = null);
+    public function getFile($fileIdentifier, $filePath, ?FileInterface $fileObject = null);
 }

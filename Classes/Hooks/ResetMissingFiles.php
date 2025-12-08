@@ -7,7 +7,7 @@ namespace IchHabRecht\Filefill\Hooks;
 /*
  * This file is part of the TYPO3 extension filefill.
  *
- * (c) Nicole Cordes <typo3@cordes.co>
+ * (c) Nicole Hummel <nicole-typo3@nimut.dev>
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -17,6 +17,7 @@ namespace IchHabRecht\Filefill\Hooks;
  * LICENSE file that was distributed with this source code.
  */
 
+use Doctrine\DBAL\ParameterType;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -42,10 +43,10 @@ class ResetMissingFiles
             ->where(
                 $expressionBuilder->eq(
                     'storage',
-                    $queryBuilder->createNamedParameter((int)$id, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter((int)$id, ParameterType::INTEGER)
                 )
             )
             ->set('missing', 0)
-            ->execute();
+            ->executeStatement();
     }
 }

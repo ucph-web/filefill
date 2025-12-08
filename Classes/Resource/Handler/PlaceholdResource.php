@@ -7,7 +7,7 @@ namespace IchHabRecht\Filefill\Resource\Handler;
 /*
  * This file is part of the TYPO3 extension filefill.
  *
- * (c) Nicole Cordes <typo3@cordes.co>
+ * (c) Nicole Hummel <nicole-typo3@nimut.dev>
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -23,29 +23,22 @@ use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class PlaceholderResource implements RemoteResourceInterface
+class PlaceholdResource implements RemoteResourceInterface
 {
-    /**
-     * @var array
-     */
-    protected $allowedFileExtensions = [
+    protected array $allowedFileExtensions = [
+        'avif',
         'gif',
         'jpeg',
         'jpg',
         'png',
+        'svg',
+        'webp',
     ];
 
-    /**
-     * @var RequestFactory
-     */
-    protected $requestFactory;
+    protected readonly RequestFactory $requestFactory;
+    protected string $url = 'https://placehold.co/';
 
-    /**
-     * @var string
-     */
-    protected $url = 'https://via.placeholder.com/';
-
-    public function __construct($_, RequestFactory $requestFactory = null)
+    public function __construct($_, ?RequestFactory $requestFactory = null)
     {
         $this->requestFactory = $requestFactory ?: GeneralUtility::makeInstance(RequestFactory::class);
     }
@@ -56,7 +49,7 @@ class PlaceholderResource implements RemoteResourceInterface
      * @param FileInterface $fileObject
      * @return bool
      */
-    public function hasFile($fileIdentifier, $filePath, FileInterface $fileObject = null)
+    public function hasFile($fileIdentifier, $filePath, ?FileInterface $fileObject = null): bool
     {
         return $fileObject instanceof FileInterface
             && in_array($fileObject->getExtension(), $this->allowedFileExtensions, true);
@@ -66,33 +59,21 @@ class PlaceholderResource implements RemoteResourceInterface
      * @param string $fileIdentifier
      * @param string $filePath
      * @param FileInterface $fileObject
-     * @return string
+     * @return string|false
      */
-    public function getFile($fileIdentifier, $filePath, FileInterface $fileObject = null)
+    public function getFile($fileIdentifier, $filePath, ?FileInterface $fileObject = null): false|string
     {
         try {
-            $fileExtension = $fileObject->getExtension();
+            $fileExtension = $fileObject?->getExtension() ?: 'png';
             $size = sprintf(
                 '%dx%d.%s',
-                max(1, $fileObject->getProperty('width')),
-                max(1, $fileObject->getProperty('height')),
+                max(1, $fileObject?->getProperty('width')),
+                max(1, $fileObject?->getProperty('height')),
                 $fileExtension
             );
             $response = $this->requestFactory->request($this->url . $size);
-            $content = $response->getBody()->getContents();
 
-            // Currently the API sends PNG images instead of GIF
-            // Check for PNG image and convert to GIF manually
-            if ($fileExtension === 'gif' && substr(bin2hex($content), 0, 16) === '89504e470d0a1a0a') {
-                $image = imagecreatefromstring($content);
-                ob_start();
-                imagegif($image);
-                $content = ob_get_contents();
-                imagedestroy($image);
-                ob_end_clean();
-            }
-
-            return $content;
+            return $response->getBody()->getContents();
         } catch (RequestException $e) {
             return false;
         }
