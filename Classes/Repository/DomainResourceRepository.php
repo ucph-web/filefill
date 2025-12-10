@@ -7,7 +7,7 @@ namespace IchHabRecht\Filefill\Repository;
 /*
  * This file is part of the TYPO3 extension filefill.
  *
- * (c) Nicole Cordes <typo3@cordes.co>
+ * (c) Nicole Hummel <nicole-typo3@nimut.dev>
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -26,11 +26,11 @@ class DomainResourceRepository
     /**
      * @return DomainResource[]
      */
-    public function findAll()
+    public function findAll(): array
     {
         $domainResources = [];
 
-        $sites = GeneralUtility::makeInstance(SiteFinder::class)->getAllSites();
+        $sites = GeneralUtility::makeInstance(SiteFinder::class)?->getAllSites();
         foreach ($sites as $site) {
             $siteConfiguration = $site->getConfiguration();
             $url = $siteConfiguration['base'];

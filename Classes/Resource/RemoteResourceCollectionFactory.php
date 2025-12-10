@@ -7,7 +7,7 @@ namespace IchHabRecht\Filefill\Resource;
 /*
  * This file is part of the TYPO3 extension filefill.
  *
- * (c) Nicole Cordes <typo3@cordes.co>
+ * (c) Nicole Hummel <nicole-typo3@nimut.dev>
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -28,7 +28,7 @@ class RemoteResourceCollectionFactory
      * @throws \RuntimeException
      * @return RemoteResourceCollection
      */
-    public static function createRemoteResourceCollectionFromConfiguration(array $configuration)
+    public static function createRemoteResourceCollectionFromConfiguration(array $configuration): RemoteResourceCollection
     {
         $remoteResources = [];
 
@@ -67,7 +67,7 @@ class RemoteResourceCollectionFactory
      * @throws \RuntimeException
      * @return RemoteResourceCollection
      */
-    public static function createRemoteResourceCollectionFromFlexForm($flexForm)
+    public static function createRemoteResourceCollectionFromFlexForm($flexForm): RemoteResourceCollection
     {
         $configuration = [];
 

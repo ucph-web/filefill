@@ -7,7 +7,7 @@ namespace IchHabRecht\Filefill\EventListener;
 /*
  * This file is part of the TYPO3 extension filefill.
  *
- * (c) Nicole Cordes <typo3@cordes.co>
+ * (c) Nicole Hummel <nicole-typo3@nimut.dev>
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -24,8 +24,8 @@ class FlexFormDataStructureParsedEventListener
     public function __invoke(AfterFlexFormDataStructureParsedEvent $event)
     {
         $identifier = $event->getIdentifier();
-        if ($identifier['tableName'] !== 'sys_file_storage'
-            || $identifier['fieldName'] !== 'tx_filefill_resources'
+        if (($identifier['tableName'] ?? '') !== 'sys_file_storage'
+            || ($identifier['fieldName'] ?? '') !== 'tx_filefill_resources'
         ) {
             return;
         }

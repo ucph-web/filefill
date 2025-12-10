@@ -7,7 +7,7 @@ namespace IchHabRecht\Filefill\Hooks;
 /*
  * This file is part of the TYPO3 extension filefill.
  *
- * (c) Nicole Cordes <typo3@cordes.co>
+ * (c) Nicole Hummel <nicole-typo3@nimut.dev>
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -18,20 +18,12 @@ namespace IchHabRecht\Filefill\Hooks;
  */
 
 use IchHabRecht\Filefill\Repository\FileRepository;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 class DeleteFiles
 {
-    /**
-     * @var FileRepository
-     */
-    protected $fileRepository;
-
-    public function __construct(
-        FileRepository $fileRepository = null
-    ) {
-        $this->fileRepository = $fileRepository ?: GeneralUtility::makeInstance(FileRepository::class);
+    public function __construct(protected readonly FileRepository $fileRepository)
+    {
     }
 
     /**
